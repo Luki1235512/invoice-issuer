@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Invoice;
 use App\Form\InvoiceFormType;
 use App\Repository\InvoiceRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,10 +14,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class InvoiceController extends AbstractController
 {
 
+    private $em;
     private $invoiceRepository;
 
-    public function __construct(InvoiceRepository $invoiceRepository) {
+    public function __construct(InvoiceRepository $invoiceRepository, EntityManagerInterface $em) {
         $this->invoiceRepository = $invoiceRepository;
+        $this->em = $em;
     }
 
     #[Route('/invoices', methods: ['GET'], name: 'invoices')]
@@ -40,8 +43,10 @@ class InvoiceController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $newInvoice = $form->getData();
 
-            dd($newInvoice);
-            exit;
+            $this->em->persist($newInvoice);
+            $this->em->flush();
+
+            return $this->redirectToRoute('invoices');
 
         }
 
