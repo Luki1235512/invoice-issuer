@@ -19,7 +19,8 @@ class InvoiceFormType extends AbstractType
                     'class' => 'bg-transparent block border-b-2 w-full h-20 text-6xl outline-none',
                     'placeholder' => 'Title'
                 ),
-                'label' => false
+                'label' => false,
+                'required' => false
             ])
             // ->add('order_date')
             ->add('odbiorca', TextType::class, [
@@ -27,7 +28,8 @@ class InvoiceFormType extends AbstractType
                     'class' => 'bg-transparent block border-b-2 w-full h-20 text-6xl outline-none',
                     'placeholder' => 'Odbiorca'
                 ),
-                'label' => false
+                'label' => false,
+                'required' => false
             ])
             // ->add('items')
         ;
