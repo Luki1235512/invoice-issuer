@@ -56,7 +56,16 @@ class InvoiceController extends AbstractController
 
     }
 
-    #[Route('/invoices/{id}', methods: ['GET'], name: 'invoice')]
+    #[Route('/invoices/delete/{id}', methods: ['GET', 'DELETE'], name: 'delete_invoice')]
+    public function delete($id): Response {
+        $invoice = $this->invoiceRepository->find($id);
+        $this->em->remove($invoice);
+        $this->em->flush();
+
+        return $this->redirectToRoute('invoices');
+    }
+
+    #[Route('/invoices/{id}', methods: ['GET'], name: 'show_invoice')]
     public function show($id): Response
     {
 
