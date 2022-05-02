@@ -3,30 +3,63 @@
 namespace App\Controller;
 
 use App\Entity\Invoice;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Form\InvoiceFormType;
+use App\Repository\InvoiceRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class InvoiceController extends AbstractController
 {
 
-    private $em;
+    private $invoiceRepository;
 
-    public function __construct(EntityManagerInterface $em) {
-        $this->em = $em;
+    public function __construct(InvoiceRepository $invoiceRepository) {
+        $this->invoiceRepository = $invoiceRepository;
     }
 
-    #[Route('/invoices', name: 'invoices')]
+    #[Route('/invoices', methods: ['GET'], name: 'invoices')]
     public function index(): Response
     {
 
-        // $repository = $this->em->getRepository(Invoice::class);
-        // $invoices = $repository->findAll();
+        $invoices = $this->invoiceRepository->findAll();
 
-        // dd($invoices);
+        return $this->render('invoices/index.html.twig', [
+            'invoices' => $invoices
+        ]);
+    }
 
-        return $this->render('index.html.twig');
+    #[Route('/invoices/create', name: 'create_invoice')]
+    public function create(Request $request): Response {
+
+        $invoice = new Invoice();
+        $form = $this->createForm(InvoiceFormType::class, $invoice);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $newInvoice = $form->getData();
+
+            dd($newInvoice);
+            exit;
+
+        }
+
+        return $this->render('invoices/create.html.twig', [
+            'form' => $form->createView()
+        ]);
+
+    }
+
+    #[Route('/invoices/{id}', methods: ['GET'], name: 'invoice')]
+    public function show($id): Response
+    {
+
+        $invoice = $this->invoiceRepository->find($id);
+
+        return $this->render('invoices/show.html.twig', [
+            'invoice' => $invoice
+        ]);
     }
 
 }

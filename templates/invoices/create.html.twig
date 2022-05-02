@@ -1,0 +1,33 @@
+{% extends "./base.html.twig" %}
+
+{% block body %}
+<div class="w-4/5 m-auto pt-40">
+    <h1 class="text-6xl text-center pb-12">
+        Create Invoice
+    </h1>
+
+        {{ form_start(form) }}
+
+        {{ form_widget(form) }}
+
+        {# <input 
+            type="text"
+            name="title"
+            placeholder="Title"
+            class="bg-transparent block border-b-2 w-full h-20 text-6xl outline-none">
+
+        <input 
+            type="text"
+            name="odbiorca"
+            placeholder="Odbiorca"
+            class="bg-transparent block border-b-2 w-full h-20 text-6xl outline-none"> #}
+
+        <button    
+            type="submit"
+            class="uppercase mt-15 bg-blue-500 text-gray-100 text-lg font-extrabold py-4 px-8 rounded-3xl">
+            Submit Post
+        </button>
+
+    {{ form_end(form) }}
+</div>
+{% endblock %}
