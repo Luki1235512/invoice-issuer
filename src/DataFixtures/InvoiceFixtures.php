@@ -15,9 +15,9 @@ class InvoiceFixtures extends Fixture implements DependentFixtureInterface
         $invoice = new Invoice();
         $invoice->setTitle('Inv 1');
 
-        $time = new DateTime();
-        $time->format("d.m.Y");
-        $invoice->setOrderDate($time);
+        // $time = new DateTime();
+        // $time->format("d.m.Y");
+        // $invoice->setOrderDate($time);
 
         $invoice->setOdbiorca("Dariusz Burak");
 
@@ -31,9 +31,9 @@ class InvoiceFixtures extends Fixture implements DependentFixtureInterface
         $invoice2 = new Invoice();
         $invoice2->setTitle('Inv 2');
 
-        $time = new DateTime();
-        $time->format("d.m.Y");
-        $invoice2->setOrderDate($time);
+        // $time = new DateTime();
+        // $time->format("d.m.Y");
+        // $invoice2->setOrderDate($time);
 
         $invoice2->setOdbiorca("Jerzy");
 
