@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Invoice;
+use App\Entity\InvoiceItem;
 use App\Form\InvoiceFormType;
 use App\Repository\InvoiceRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -37,6 +39,7 @@ class InvoiceController extends AbstractController
     public function create(Request $request): Response {
 
         $invoice = new Invoice();
+
         $form = $this->createForm(InvoiceFormType::class, $invoice);
 
         $form->handleRequest($request);
@@ -44,6 +47,9 @@ class InvoiceController extends AbstractController
             $newInvoice = $form->getData();
 
             $this->em->persist($newInvoice);
+
+            // $this->em->persist($invoice);
+
             $this->em->flush();
 
             return $this->redirectToRoute('invoices');

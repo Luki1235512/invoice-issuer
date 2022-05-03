@@ -21,13 +21,14 @@ class InvoiceItem
     #[ORM\Column(type: 'integer')]
     private $quantity;
 
-    #[ORM\ManyToMany(targetEntity: Invoice::class, mappedBy: 'items')]
-    private $invoices;
+    #[ORM\ManyToOne(targetEntity: "Invoice", inversedBy: 'items')]
+    #[ORM\JoinColumn(name: 'invoice_id', referencedColumnName: 'id')]
+    private $invoice;
 
-    public function __construct()
-    {
-        $this->invoices = new ArrayCollection();
-    }
+    // public function __construct()
+    // {
+    //     $this->invoice = new ArrayCollection();
+    // }
 
     public function getId(): ?int
     {
@@ -58,30 +59,40 @@ class InvoiceItem
         return $this;
     }
 
-    /**
-     * @return Collection<int, Invoice>
-     */
-    public function getInvoices(): Collection
-    {
-        return $this->invoices;
-    }
 
-    public function addInvoice(Invoice $invoice): self
-    {
-        if (!$this->invoices->contains($invoice)) {
-            $this->invoices[] = $invoice;
-            $invoice->addItem($this);
-        }
+    // public function getInvoices(): Collection
+    // {
+    //     return $this->invoices;
+    // }
 
+    // public function addInvoice(Invoice $invoice): self
+    // {
+    //     if (!$this->invoices->contains($invoice)) {
+    //         $this->invoices[] = $invoice;
+    //         $invoice->addItem($this);
+    //     }
+
+    //     return $this;
+    // }
+
+    // public function removeInvoice(Invoice $invoice): self
+    // {
+    //     if ($this->invoices->removeElement($invoice)) {
+    //         $invoice->removeItem($this);
+    //     }
+
+    //     return $this;
+    // }
+
+
+    public function setInvoice(Invoice $invoice): InvoiceItem {
+        $this->invoice = $invoice;
         return $this;
     }
 
-    public function removeInvoice(Invoice $invoice): self
-    {
-        if ($this->invoices->removeElement($invoice)) {
-            $invoice->removeItem($this);
-        }
 
-        return $this;
+    public function getInvoice(): Invoice {
+        return $this->invoice;
     }
+
 }

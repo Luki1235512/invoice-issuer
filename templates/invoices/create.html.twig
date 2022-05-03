@@ -1,32 +1,102 @@
 {% extends "./base.html.twig" %}
 
+{% block javascripts %}
+
+    <script>
+        var $collectionHolder;  
+
+        var $addNewItem = $('<a href="#" class="btn btn-info">Add new item</a>');
+
+        $(document).ready(function() {
+            $collectionHolder = $('#item_list')
+
+            $collectionHolder.append($addNewItem)
+            $collectionHolder.data('index', $collectionHolder.find('.panel').length)
+
+            $collectionHolder.find('.panel').each(function (item) {
+                addRemoveButton($(this))
+            })
+
+            console.log($collectionHolder.data('prototype'))
+
+        $addNewItem.click(function (e) {
+            e.preventDefault()
+            addNewForm()
+        })
+
+        })
+
+        function addNewForm() {
+            var prototype = $collectionHolder.data('prototype')
+            var index = $collectionHolder.data('index')
+            var newForm = prototype
+
+            newForm = newForm.replace(/__name__/g, index)
+
+            $collectionHolder.data('index', index+1)
+            var $panel = $('<div class="panel panel-warning"><div class="panel-heading"></div></div>')
+
+            var $panelBody = $('<div class="panel-body"></div>').append(newForm)
+            $panel.append($panelBody)
+
+            addRemoveButton($panel)
+
+            $addNewItem.before($panel)
+
+            
+
+        }
+
+        function addRemoveButton($panel) {
+            var $removeButton = $('<a href="#" class="btn btn-danger">Remove</a>')
+
+            var $panelFooter = $('<div class="panel-footer"></div>').append($removeButton)
+
+            $removeButton.click(function (e) {
+                e.preventDefault()
+                $(e.target).parents('.panel').slideUp(1000, function () {
+                    $(this).remove()
+                })
+            })
+
+            $panel.append($panelFooter)
+
+        }
+
+
+    </script>
+
+{% endblock %}
+
 {% block body %}
-<div class="w-4/5 m-auto pt-40">
+<div class="w-4/5 m-auto pt-40" bg-black-500>
     <h1 class="text-6xl text-center pb-12">
         Create Invoice
     </h1>
 
         {{ form_start(form) }}
 
-        {{ form_widget(form) }}
+            {{ form_row(form.title) }}
+            <div id="item_list" data-prototype="{{ form_widget(form.items.vars.prototype)|e('html_attr') }}">
+                {% for row in form.items %}
+                    <div class="panel panel-warning">
+                        <div class="panel-heading">
+                            <strong>{# {{ row.vars.value.name }} #}</strong>
+                        </div>
+                        <div class="panel-body">
+                            {{ form_row(row) }}
+                        </div>
+                    </div>
 
-        {# <input 
-            type="text"
-            name="title"
-            placeholder="Title"
-            class="bg-transparent block border-b-2 w-full h-20 text-6xl outline-none">
+                {% endfor %}
+            </div>
 
-        <input 
-            type="text"
-            name="odbiorca"
-            placeholder="Odbiorca"
-            class="bg-transparent block border-b-2 w-full h-20 text-6xl outline-none"> #}
-
-        <button    
-            type="submit"
-            class="uppercase mt-15 bg-blue-500 text-gray-100 text-lg font-extrabold py-4 px-8 rounded-3xl">
-            Submit Post
-        </button>
+            {{ form_widget(form) }}
+            <button    
+                type="submit"
+                class="uppercase mt-15 bg-blue-500 text-gray-100 text-lg font-extrabold py-4 px-8 rounded-3xl">
+                Submit Post
+            </button>
 
     {{ form_end(form) }}
 </div>

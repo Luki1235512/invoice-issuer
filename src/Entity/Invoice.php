@@ -30,7 +30,7 @@ class Invoice
     #[Assert\NotBlank]
     private $odbiorca;
 
-    #[ORM\ManyToMany(targetEntity: InvoiceItem::class, inversedBy: 'invoices')]
+    #[ORM\OneToMany(targetEntity: InvoiceItem::class, mappedBy: 'invoice', cascade: ['persist'])]
     private $items;
 
     public function __construct()
@@ -60,7 +60,7 @@ class Invoice
         return $this;
     }
 
-    public function getOrderDate(): ?\DateTimeInterface
+    public function getorder_date(): ?\DateTimeInterface
     {
         return $this->order_date;
     }
@@ -84,27 +84,26 @@ class Invoice
         return $this;
     }
 
-    /**
-     * @return Collection<int, InvoiceItem>
-     */
     public function getItems(): Collection
     {
         return $this->items;
     }
 
-    public function addItem(InvoiceItem $item): self
+    public function addItem(InvoiceItem $item): Invoice
     {
-        if (!$this->items->contains($item)) {
-            $this->items[] = $item;
-        }
+        // if (!$this->items->contains($item)) {
+        //     $this->items[] = $item;
+        // }
+        $this->items[] = $item;
+        $item->setInvoice($this);
 
         return $this;
     }
 
-    public function removeItem(InvoiceItem $item): self
+    public function removeItem(InvoiceItem $item)
     {
         $this->items->removeElement($item);
 
-        return $this;
+        // return $this;
     }
 }
