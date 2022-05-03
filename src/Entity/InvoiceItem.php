@@ -21,14 +21,24 @@ class InvoiceItem
     #[ORM\Column(type: 'integer')]
     private $quantity;
 
+    #[ORM\Column(type: 'string', length: 255)]
+    private $unitPrice;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    private $totalPrice;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    private $tax;
+
+
     #[ORM\ManyToOne(targetEntity: "Invoice", inversedBy: 'items')]
     #[ORM\JoinColumn(name: 'invoice_id', referencedColumnName: 'id')]
     private $invoice;
 
-    // public function __construct()
-    // {
-    //     $this->invoice = new ArrayCollection();
-    // }
+    public function __construct()
+    {
+        $this->totalPrice = 2;
+    }
 
     public function getId(): ?int
     {
@@ -55,6 +65,42 @@ class InvoiceItem
     public function setQuantity(int $quantity): self
     {
         $this->quantity = $quantity;
+
+        return $this;
+    }
+
+    public function getUnitPrice(): ?int
+    {
+        return $this->unitPrice;
+    }
+
+    public function setUnitPrice(int $unitPrice): self
+    {
+        $this->unitPrice = $unitPrice;
+
+        return $this;
+    }
+
+    public function getTotalPrice(): ?int
+    {
+        return $this->totalPrice;
+    }
+
+    public function setTotalPrice(int $totalPrice): self
+    {
+        $this->totalPrice = $totalPrice;
+
+        return $this;
+    }
+
+    public function getTax(): ?int
+    {
+        return $this->tax;
+    }
+
+    public function setTax(int $tax): self
+    {
+        $this->tax = $tax;
 
         return $this;
     }

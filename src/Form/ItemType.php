@@ -15,7 +15,9 @@ class ItemType extends AbstractType
         $builder
             ->add('name', TextType::class, [])
             // ->add('order_date')
+            ->add('unitPrice')
             ->add('quantity')
+            ->add('tax')
             // ->add('items')
         ;
     }

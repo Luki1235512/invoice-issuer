@@ -77,6 +77,14 @@
         {{ form_start(form) }}
 
             {{ form_row(form.title) }}
+            {{ form_row(form.receiverName) }}
+            {{ form_row(form.receiverStreet) }}
+            {{ form_row(form.receiverZIPcode) }}
+
+            {{ form_row(form.senderName) }}
+            {{ form_row(form.senderStreet) }}
+            {{ form_row(form.senderZIPcode) }}
+
             <div id="item_list" data-prototype="{{ form_widget(form.items.vars.prototype)|e('html_attr') }}">
                 {% for row in form.items %}
                     <div class="panel panel-warning">
@@ -91,12 +99,11 @@
                 {% endfor %}
             </div>
 
-            {{ form_widget(form) }}
             <button    
                 type="submit"
                 class="uppercase mt-15 bg-blue-500 text-gray-100 text-lg font-extrabold py-4 px-8 rounded-3xl">
                 Submit Post
-            </button>
+            </button> 
 
     {{ form_end(form) }}
 </div>

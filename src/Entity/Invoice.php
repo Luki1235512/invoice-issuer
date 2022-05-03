@@ -28,9 +28,30 @@ class Invoice
 
     #[ORM\Column(type: 'string', length: 255)]
     #[Assert\NotBlank]
-    private $odbiorca;
+    private $receiverName;
 
-    #[ORM\OneToMany(targetEntity: InvoiceItem::class, mappedBy: 'invoice', cascade: ['persist'])]
+    #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\NotBlank]
+    private $receiverStreet;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\NotBlank]
+    private $receiverZIPcode;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\NotBlank]
+    private $senderName;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\NotBlank]
+    private $senderStreet;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\NotBlank]
+    private $senderZIPcode;
+
+
+    #[ORM\OneToMany(targetEntity: InvoiceItem::class, mappedBy: 'invoice', cascade: ['persist', 'remove'])]
     private $items;
 
     public function __construct()
@@ -72,17 +93,82 @@ class Invoice
         return $this;
     }
 
-    public function getOdbiorca(): ?string
+    public function getReceiverName(): ?string
     {
-        return $this->odbiorca;
+        return $this->receiverName;
     }
 
-    public function setOdbiorca(string $odbiorca): self
+    public function setReceiverName(string $receiverName): self
     {
-        $this->odbiorca = $odbiorca;
+        $this->receiverName = $receiverName;
 
         return $this;
     }
+
+    public function getReceiverStreet(): ?string
+    {
+        return $this->receiverStreet;
+    }
+
+    public function setReceiverStreet(string $receiverStreet): self
+    {
+        $this->receiverStreet = $receiverStreet;
+
+        return $this;
+    }
+
+    public function getReceiverZIPcode(): ?string
+    {
+        return $this->receiverZIPcode;
+    }
+
+    public function setReceiverZIPcode(string $receiverZIPcode): self
+    {
+        $this->receiverZIPcode = $receiverZIPcode;
+
+        return $this;
+    }
+
+    ////////////////////////////////////////
+
+    public function getSenderName(): ?string
+    {
+        return $this->senderName;
+    }
+
+    public function setSenderName(string $senderName): self
+    {
+        $this->senderName = $senderName;
+
+        return $this;
+    }
+
+    public function getSenderStreet(): ?string
+    {
+        return $this->senderStreet;
+    }
+
+    public function setSenderStreet(string $senderStreet): self
+    {
+        $this->senderStreet = $senderStreet;
+
+        return $this;
+    }
+
+    public function getSenderZIPcode(): ?string
+    {
+        return $this->senderZIPcode;
+    }
+
+    public function setSenderZIPcode(string $senderZIPcode): self
+    {
+        $this->senderZIPcode = $senderZIPcode;
+
+        return $this;
+    }
+
+    ///////////////////////////////////////
+
 
     public function getItems(): Collection
     {
