@@ -3,7 +3,7 @@
 1. To run this app locally:
 
 - Set your database in `.env`
-- run `compeser install`
+- run `composer install`
 - run `npm update`
 - run `npm run watch`
 
