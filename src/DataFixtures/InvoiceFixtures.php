@@ -13,31 +13,35 @@ class InvoiceFixtures extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager): void
     {
         $invoice = new Invoice();
-        $invoice->setTitle('Inv 1');
 
-        // $time = new DateTime();
-        // $time->format("d.m.Y");
-        // $invoice->setOrderDate($time);
+        $invoice->setReceiverName("Darren Beetroot");
+        $invoice->setReceiverStreet("ReStrt");
+        $invoice->setReceiverZIPcode("12-345");
 
-        $invoice->setOdbiorca("Dariusz Burak");
+        $invoice->setSenderName('Luki1235512');
+        $invoice->setSenderStreet("SeStrt");
+        $invoice->setSenderZIPcode("54-321");
 
         $invoice->addItem($this->getReference('item_1'));
         $invoice->addItem($this->getReference('item_2'));
+        $invoice->addItem($this->getReference('item_3'));
 
         $manager->persist($invoice);
 
         // 
 
         $invoice2 = new Invoice();
-        $invoice2->setTitle('Inv 2');
 
-        // $time = new DateTime();
-        // $time->format("d.m.Y");
-        // $invoice2->setOrderDate($time);
+        $invoice2->setReceiverName("George");
+        $invoice2->setReceiverStreet("ReStrt2");
+        $invoice2->setReceiverZIPcode("67-890");
 
-        $invoice2->setOdbiorca("Jerzy");
+        $invoice2->setSenderName('Luki2155321');
+        $invoice2->setSenderStreet("SeStrt2");
+        $invoice2->setSenderZIPcode("09-876");
 
-        $invoice2->addItem($this->getReference('item_3'));
+        $invoice2->addItem($this->getReference('item_4'));
+        $invoice2->addItem($this->getReference('item_5'));
 
         $manager->persist($invoice2);
 
