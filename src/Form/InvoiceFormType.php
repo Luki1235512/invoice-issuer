@@ -24,14 +24,49 @@ class InvoiceFormType extends AbstractType
             //     'required' => false
             // ])
 
-            ->add('title', TextType::class, [])
-            ->add('receiverName', TextType::class, [])
-            ->add('receiverStreet', TextType::class, [])
-            ->add('receiverZIPcode', TextType::class, [])
+            ->add('title', TextType::class, [
+                'attr' => array(
+                    'class' => 'bg-transparent block border-b-2 w-full h-10 text-2xl outline-none',
+                    'placeholder' => ''
+                )
+            ])
+            ->add('receiverName', TextType::class, [
+                'attr' => array(
+                    'class' => 'bg-transparent block border-b-2 w-full h-10 text-2xl outline-none',
+                    'placeholder' => ''
+                    )
+            ])
+            ->add('receiverStreet', TextType::class, [
+                'attr' => array(
+                    'class' => 'bg-transparent block border-b-2 w-full h-10 text-2xl outline-none',
+                    'placeholder' => ''
+                )
+            ])
+            ->add('receiverZIPcode', TextType::class, [
+                'attr' => array(
+                    'class' => 'bg-transparent block border-b-2 w-full h-10 text-2xl outline-none',
+                    'placeholder' => ''
+                )
+            ])
 
-            ->add('senderName', TextType::class, [])
-            ->add('senderStreet', TextType::class, [])
-            ->add('senderZIPcode', TextType::class, [])
+            ->add('senderName', TextType::class, [
+                'attr' => array(
+                    'class' => 'bg-transparent block border-b-2 w-full h-10 text-2xl outline-none',
+                    'placeholder' => ''
+                )
+            ])
+            ->add('senderStreet', TextType::class, [
+                'attr' => array(
+                    'class' => 'bg-transparent block border-b-2 w-full h-10 text-2xl outline-none',
+                    'placeholder' => ''
+                )
+            ])
+            ->add('senderZIPcode', TextType::class, [
+                'attr' => array(
+                    'class' => 'bg-transparent block border-b-2 w-full h-10 text-2xl outline-none',
+                    'placeholder' => ''
+                )
+            ])
 
             ->add('items', CollectionType::class, [
                 'entry_type' => ItemType::class,

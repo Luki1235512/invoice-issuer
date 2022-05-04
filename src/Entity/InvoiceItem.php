@@ -18,16 +18,16 @@ class InvoiceItem
     #[ORM\Column(type: 'string', length: 255)]
     private $name;
 
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: 'float')]
     private $quantity;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'float', length: 255)]
     private $unitPrice;
 
-    #[ORM\Column(type: 'string', length: 255)]
-    private $totalPrice;
+    // #[ORM\Column(type: 'string', length: 255)]
+    // private $totalPrice;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'float', length: 255)]
     private $tax;
 
 
@@ -35,10 +35,10 @@ class InvoiceItem
     #[ORM\JoinColumn(name: 'invoice_id', referencedColumnName: 'id')]
     private $invoice;
 
-    public function __construct()
-    {
-        $this->totalPrice = 2;
-    }
+    // public function __construct()
+    // {
+    //     $this->totalPrice = 2;
+    // }
 
     public function getId(): ?int
     {
@@ -57,48 +57,48 @@ class InvoiceItem
         return $this;
     }
 
-    public function getQuantity(): ?int
+    public function getQuantity(): ?float
     {
         return $this->quantity;
     }
 
-    public function setQuantity(int $quantity): self
+    public function setQuantity(float $quantity): self
     {
         $this->quantity = $quantity;
 
         return $this;
     }
 
-    public function getUnitPrice(): ?int
+    public function getUnitPrice(): ?float
     {
         return $this->unitPrice;
     }
 
-    public function setUnitPrice(int $unitPrice): self
+    public function setUnitPrice(float $unitPrice): self
     {
         $this->unitPrice = $unitPrice;
 
         return $this;
     }
 
-    public function getTotalPrice(): ?int
-    {
-        return $this->totalPrice;
-    }
+    // public function getTotalPrice(): ?int
+    // {
+    //     return $this->totalPrice;
+    // }
 
-    public function setTotalPrice(int $totalPrice): self
-    {
-        $this->totalPrice = $totalPrice;
+    // public function setTotalPrice(int $totalPrice): self
+    // {
+    //     $this->totalPrice = $totalPrice;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function getTax(): ?int
+    public function getTax(): ?float
     {
         return $this->tax;
     }
 
-    public function setTax(int $tax): self
+    public function setTax(float $tax): self
     {
         $this->tax = $tax;
 

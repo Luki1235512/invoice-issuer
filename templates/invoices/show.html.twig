@@ -15,12 +15,50 @@
             </div>
         </div>
 
-        <p class="text-xl py-6">
-            Odbiorca: {{ invoice.receiverName }}
+        <p class="text-xl">
+            Invoice number: {{ invoice.receiverName }}
+        </p>
+        <p class="text-xl">
+            Receiver: {{ invoice.receiverName }}
+        </p>
+        <p class="text-xl">
+            Receiver Street: {{ invoice.receiverStreet }}
+        </p>
+        <p class="text-xl">
+            Receiver ZIP code: {{ invoice.receiverZIPcode }}
+        </p>
+        <p class="text-xl">
+            Sender name: {{ invoice.senderName }}
+        </p>
+        <p class="text-xl">
+            Sender Street: {{ invoice.senderStreet }}
+        </p>
+        <p class="text-xl">
+            Sender ZIP code: {{ invoice.senderZIPcode }}
         </p>
 
+        {% for item in invoice.items %}
+            <hr>
+            <p class="text-xl">
+                Name: {{ item.name }}
+            </p>
+            <p class="text-xl">
+                Unit price: {{ item.unitPrice }}
+            </p>
+            <p class="text-xl">
+                Quantity: {{ item.quantity }}
+            </p>
+            <p class="text-xl">
+                Total price: 
+            </p>
+            <p class="text-xl">
+                Tax: {{ item.tax }}
+            </p>
+        
+        {% endfor %}
+
         <a href="/invoices/delete/{{ invoice.id }}"
-        class="bg-red-500 font-bold py-2 px-4 ml-6 rounded transition-all hover:bg-red-300">
+        class="d-flex justify-content-center btn btn-danger">
         Delete invoice
         </a>
 

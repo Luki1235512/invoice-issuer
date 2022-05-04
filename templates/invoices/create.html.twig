@@ -1,5 +1,46 @@
 {% extends "./base.html.twig" %}
 
+{% block body %}
+<div class="w-4/5 m-auto pt-40" bg-black-500>
+    <h1 class="text-6xl text-center pb-12">
+        Create Invoice
+    </h1>
+
+        {{ form_start(form) }}
+
+            {{ form_row(form.title) }}
+            {{ form_row(form.receiverName) }}
+            {{ form_row(form.receiverStreet) }}
+            {{ form_row(form.receiverZIPcode) }}
+
+            {{ form_row(form.senderName) }}
+            {{ form_row(form.senderStreet) }}
+            {{ form_row(form.senderZIPcode) }}
+
+            <div id="item_list" class="col-sm-8 col-sm-offset-2" data-prototype="{{ form_widget(form.items.vars.prototype)|e('html_attr') }}">
+                {% for row in form.items %}
+                    <div class="panel panel-warning">
+                        <div class="panel-heading">
+                            <strong>{# {{ row.vars.value.name }} #}</strong>
+                        </div>
+                        <div class="panel-body">
+                            {{ form_row(row) }}
+                        </div>
+                    </div>
+
+                {% endfor %}
+            </div>
+
+            <button    
+                type="submit"
+                class="float-right uppercase mt-15 bg-blue-500 text-gray-100 text-lg font-extrabold py-4 px-8 rounded-3xl">
+                Submit Post
+            </button> 
+
+    {{ form_end(form) }}
+</div>
+{% endblock %}
+
 {% block javascripts %}
 
     <script>
@@ -66,45 +107,4 @@
 
     </script>
 
-{% endblock %}
-
-{% block body %}
-<div class="w-4/5 m-auto pt-40" bg-black-500>
-    <h1 class="text-6xl text-center pb-12">
-        Create Invoice
-    </h1>
-
-        {{ form_start(form) }}
-
-            {{ form_row(form.title) }}
-            {{ form_row(form.receiverName) }}
-            {{ form_row(form.receiverStreet) }}
-            {{ form_row(form.receiverZIPcode) }}
-
-            {{ form_row(form.senderName) }}
-            {{ form_row(form.senderStreet) }}
-            {{ form_row(form.senderZIPcode) }}
-
-            <div id="item_list" data-prototype="{{ form_widget(form.items.vars.prototype)|e('html_attr') }}">
-                {% for row in form.items %}
-                    <div class="panel panel-warning">
-                        <div class="panel-heading">
-                            <strong>{# {{ row.vars.value.name }} #}</strong>
-                        </div>
-                        <div class="panel-body">
-                            {{ form_row(row) }}
-                        </div>
-                    </div>
-
-                {% endfor %}
-            </div>
-
-            <button    
-                type="submit"
-                class="uppercase mt-15 bg-blue-500 text-gray-100 text-lg font-extrabold py-4 px-8 rounded-3xl">
-                Submit Post
-            </button> 
-
-    {{ form_end(form) }}
-</div>
 {% endblock %}
