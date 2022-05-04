@@ -4,7 +4,7 @@ namespace App\Form;
 
 use App\Entity\InvoiceItem;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -20,26 +20,24 @@ class ItemType extends AbstractType
                     'placeholder' => ''
                 )
             ])
-            // ->add('order_date')
-            ->add('unitPrice', NumberType::class, [
+            ->add('unitPrice', IntegerType::class, [
                 'attr' => array(
                     'class' => 'bg-transparent block border-b-2 w-full h-10 text-2xl outline-none',
                     'placeholder' => ''
                 )
             ])
-            ->add('quantity', NumberType::class, [
+            ->add('quantity', IntegerType::class, [
                 'attr' => array(
                     'class' => 'bg-transparent block border-b-2 w-full h-10 text-2xl outline-none',
                     'placeholder' => ''
                 )
             ])
-            ->add('tax', NumberType::class, [
+            ->add('tax', IntegerType::class, [
                 'attr' => array(
                     'class' => 'bg-transparent block border-b-2 w-full h-10 text-2xl outline-none',
                     'placeholder' => ''
                 )
             ])
-            // ->add('items')
         ;
     }
 

@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\InvoiceItemRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: InvoiceItemRepository::class)]
@@ -24,21 +22,12 @@ class InvoiceItem
     #[ORM\Column(type: 'float', length: 255)]
     private $unitPrice;
 
-    // #[ORM\Column(type: 'string', length: 255)]
-    // private $totalPrice;
-
     #[ORM\Column(type: 'float', length: 255)]
     private $tax;
-
 
     #[ORM\ManyToOne(targetEntity: "Invoice", inversedBy: 'items')]
     #[ORM\JoinColumn(name: 'invoice_id', referencedColumnName: 'id')]
     private $invoice;
-
-    // public function __construct()
-    // {
-    //     $this->totalPrice = 2;
-    // }
 
     public function getId(): ?int
     {
@@ -81,18 +70,6 @@ class InvoiceItem
         return $this;
     }
 
-    // public function getTotalPrice(): ?int
-    // {
-    //     return $this->totalPrice;
-    // }
-
-    // public function setTotalPrice(int $totalPrice): self
-    // {
-    //     $this->totalPrice = $totalPrice;
-
-    //     return $this;
-    // }
-
     public function getTax(): ?float
     {
         return $this->tax;
@@ -104,32 +81,6 @@ class InvoiceItem
 
         return $this;
     }
-
-
-    // public function getInvoices(): Collection
-    // {
-    //     return $this->invoices;
-    // }
-
-    // public function addInvoice(Invoice $invoice): self
-    // {
-    //     if (!$this->invoices->contains($invoice)) {
-    //         $this->invoices[] = $invoice;
-    //         $invoice->addItem($this);
-    //     }
-
-    //     return $this;
-    // }
-
-    // public function removeInvoice(Invoice $invoice): self
-    // {
-    //     if ($this->invoices->removeElement($invoice)) {
-    //         $invoice->removeItem($this);
-    //     }
-
-    //     return $this;
-    // }
-
 
     public function setInvoice(Invoice $invoice): InvoiceItem {
         $this->invoice = $invoice;

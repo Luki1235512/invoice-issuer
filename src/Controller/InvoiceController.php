@@ -6,18 +6,13 @@ use App\Entity\Invoice;
 use App\Form\InvoiceFormType;
 use App\Repository\InvoiceRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
-use Knp\Snappy\Pdf;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
 
 use Dompdf\Dompdf;
-use Dompdf\Options;
-use Spipu\Html2Pdf\Html2Pdf;
-use Symfony\Component\Filesystem\Filesystem;
+
 
 class InvoiceController extends AbstractController
 {
@@ -30,7 +25,7 @@ class InvoiceController extends AbstractController
         $this->em = $em;
     }
 
-    #[Route('/invoices', methods: ['GET'], name: 'invoices')]
+    #[Route('/', methods: ['GET'], name: 'invoices')]
     public function index(): Response
     {
 
@@ -42,7 +37,8 @@ class InvoiceController extends AbstractController
     }
 
     #[Route('/invoices/create', name: 'create_invoice')]
-    public function create(Request $request): Response {
+    public function create(Request $request): Response 
+    {
 
         $invoice = new Invoice();
 
@@ -53,8 +49,6 @@ class InvoiceController extends AbstractController
             $newInvoice = $form->getData();
 
             $this->em->persist($newInvoice);
-
-            // $this->em->persist($invoice);
 
             $this->em->flush();
 
@@ -69,7 +63,8 @@ class InvoiceController extends AbstractController
     }
 
     #[Route('/invoices/delete/{id}', methods: ['GET', 'DELETE'], name: 'delete_invoice')]
-    public function delete($id): Response {
+    public function delete($id): Response 
+    {
         $invoice = $this->invoiceRepository->find($id);
         $this->em->remove($invoice);
         $this->em->flush();
@@ -89,8 +84,7 @@ class InvoiceController extends AbstractController
     }
 
     #[Route('/invoices/{id}/print', methods: ['GET'], name: 'print_invoice')]
-    public function pdfAction($id): Response {
-
+    public function pdfAction($id) {
 
         $dompdf = new Dompdf();
 
@@ -102,21 +96,14 @@ class InvoiceController extends AbstractController
     
         $dompdf->loadHtml($html);
 
-        
         $dompdf->setPaper('A4', 'portrait');
 
         $dompdf->render();
 
         ob_end_clean();
-        $dompdf->stream("mypdf.pdf", [
+        $dompdf->stream($invoice->getTitle(), [
             "Attachment" => true
         ]);
-
-        // return $this->render('invoices/print.html.twig', [
-        //     'invoice' => $invoice
-        // ]);
-
-
     }
 
 }
