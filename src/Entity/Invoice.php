@@ -62,6 +62,8 @@ class Invoice
         $time->format("d.m.Y");
         $this->setOrderDate($time);
 
+        $this->setTitle(uniqid() . "/" . $time->format("d.m.Y"));
+
     }
 
     public function getId(): ?int
