@@ -192,4 +192,14 @@ class Invoice
 
         // return $this;
     }
+
+    // public function getFullPrice(): float {
+    //     $sum = 0;
+    //     $items = $this->getItems();
+    //     foreach($items as $item) {
+    //         $sum = ($item->getTax() / 100 * $item->getQuantity() * $item->getUnitPrice);
+    //     }
+
+    //     return  $sum;
+    // }
 }

@@ -3,15 +3,21 @@
 namespace App\Controller;
 
 use App\Entity\Invoice;
-use App\Entity\InvoiceItem;
 use App\Form\InvoiceFormType;
 use App\Repository\InvoiceRepository;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
+use Knp\Snappy\Pdf;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
+
+use Dompdf\Dompdf;
+use Dompdf\Options;
+use Spipu\Html2Pdf\Html2Pdf;
+use Symfony\Component\Filesystem\Filesystem;
 
 class InvoiceController extends AbstractController
 {
@@ -80,6 +86,37 @@ class InvoiceController extends AbstractController
         return $this->render('invoices/show.html.twig', [
             'invoice' => $invoice
         ]);
+    }
+
+    #[Route('/invoices/{id}/print', methods: ['GET'], name: 'print_invoice')]
+    public function pdfAction($id): Response {
+
+
+        $dompdf = new Dompdf();
+
+        $invoice = $this->invoiceRepository->find($id);
+        
+        $html = $this->renderView('invoices/print.html.twig', [
+            'invoice' => $invoice
+        ]);
+    
+        $dompdf->loadHtml($html);
+
+        
+        $dompdf->setPaper('A4', 'portrait');
+
+        $dompdf->render();
+
+        ob_end_clean();
+        $dompdf->stream("mypdf.pdf", [
+            "Attachment" => true
+        ]);
+
+        // return $this->render('invoices/print.html.twig', [
+        //     'invoice' => $invoice
+        // ]);
+
+
     }
 
 }
