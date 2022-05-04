@@ -1,66 +1,146 @@
 {% extends "./base.html.twig" %}
 
+
 {% block body %}
-    <div class="sm:w-3/5 w-4/5 mx-auto">
-        <h1 class="pt-20 sm:text-5xl md:text-7xl text-4xl font-bold text-center">
-            {{ invoice.title }}
-        </h1>
 
-        <div class="py-10 text-center">
-            <div class="inline-block sm:pt-1">
+	<table class="table table-striped table-bordered text-center ">
 
-                <p class="text-sm text-gray-600">
-                    {{invoice.order_date.format('d/m/Y')}}
-                </p>
-            </div>
+		<thead class="bg-info">
+			<tr >
+				<th scope="col">Code</th>
+				<th scope="col">Date</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>
+					{{invoice.title}}
+				</td>
+				<td>
+					{{invoice.order_date.format('d/m/Y')}}
+				</td>
+			</tr>
+		</tbody>
+		<tbody></tbody>
+	</table>
+	<table class="table table-striped table-bordered">
+		<thead class="bg-info">
+			<tr>
+				<th scope="col"></th>
+				<th scope="col">RECEIVER</th>
+				<th scope="col">SENDER</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<th scope="row">
+					Name
+				</th>
+				<td>
+					{{invoice.receiverName}}
+				</td>
+				<td>
+					{{invoice.senderName}}
+				</td>
+			</tr>
+			<tr>
+				<th scope="row">
+					St.
+				</th>
+				<td>
+					{{invoice.receiverStreet}}
+				</td>
+				<td>
+					{{invoice.senderStreet}}
+				</td>
+			</tr>
+			<tr>
+				<th scope="row">
+					ZIP Code
+				</th>
+				<td>
+					{{invoice.receiverZIPcode}}
+				</td>
+				<td>
+					{{invoice.senderZIPcode}}
+				</td>
+			</tr>
+		</tbody>
+		<tbody></tbody>
+	</table>
+
+	<table class="table table-striped table-bordered">
+		<thead class="bg-info">
+			<tr>
+				<th scope="col">Item name</th>
+				<th scope="col">Unit price</th>
+				<th scope="col">Quantity</th>
+				<th scope="col">TAX</th>
+				<th scope="col">Price</th>
+			</tr>
+		</thead>
+
+		<tbody>
+
+			{% set fullPrice = 0 %}
+
+			{% for item in invoice.items %}
+
+				{% set priceWoTax = item.unitPrice * item.quantity %}
+				{% set priceWTax = priceWoTax - (item.tax / 100 * priceWoTax) %}
+				{% set fullPrice = fullPrice + priceWTax %}
+
+
+				<tr>
+					<th scope="row">
+						{{ item.name }}
+					</th>
+					<td>
+						{{item.unitPrice}}
+					</td>
+					<td>
+						{{item.quantity}}
+					</td>
+					<td>
+						{{item.tax}}
+					</td>
+					<td>
+						{{priceWTax}}
+					</td>
+				</tr>
+
+
+			{% endfor %}
+
+			<tr>
+				<th scope="row"></th>
+				<td></td>
+				<td></td>
+				<td class="bg-secondary">
+					<b>FULL PRICE</b>
+				</td>
+				<td class="bg-secondary">
+					{{fullPrice}}
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+    <hr>
+
+    <div class="justify-content-center">
+
+            <a href="/invoices/" class=" btn btn-info btn-block">
+                Back
+            </a>
+            <a href="/invoices/{{ invoice.id }}/print" class=" btn btn-success btn-block">
+                Download invoice
+            </a>
+
+            <a href="/invoices/delete/{{ invoice.id }}" class=" btn btn-danger btn-block">
+                Delete invoice
+            </a>
         </div>
 
-        <p class="text-xl">
-            Invoice number: {{ invoice.receiverName }}
-        </p>
-        <p class="text-xl">
-            Receiver: {{ invoice.receiverName }}
-        </p>
-        <p class="text-xl">
-            Receiver Street: {{ invoice.receiverStreet }}
-        </p>
-        <p class="text-xl">
-            Receiver ZIP code: {{ invoice.receiverZIPcode }}
-        </p>
-        <p class="text-xl">
-            Sender name: {{ invoice.senderName }}
-        </p>
-        <p class="text-xl">
-            Sender Street: {{ invoice.senderStreet }}
-        </p>
-        <p class="text-xl">
-            Sender ZIP code: {{ invoice.senderZIPcode }}
-        </p>
 
-        {% for item in invoice.items %}
-            <hr>
-            <p class="text-xl">
-                Name: {{ item.name }}
-            </p>
-            <p class="text-xl">
-                Unit price: {{ item.unitPrice }}
-            </p>
-            <p class="text-xl">
-                Quantity: {{ item.quantity }}
-            </p>
-            <p class="text-xl">
-                Total price: 
-            </p>
-            <p class="text-xl">
-                Tax: {{ item.tax }}
-            </p>
-        
-        {% endfor %}
-
-        <a href="/invoices/delete/{{ invoice.id }}"
-        class="d-flex justify-content-center btn btn-danger">
-        Delete invoice
-        </a>
-
-    </div>
 {% endblock %}
