@@ -65,7 +65,7 @@
 			{% endfor %}
 
 		</div>
-		<button type="submit" class="float-right uppercase mt-15 bg-blue-500 text-gray-100 text-lg font-extrabold py-4 px-8 rounded-3xl">
+		<button type="submit" class="float-right py-4 px-8 mx-4 rounded btn btn-success">
 			Submit Post
 		</button>
 
@@ -78,7 +78,7 @@
 	<script>
 		var $collectionHolder;
 
-		var $addNewItem = $('<a href="#" class="btn btn-info">Add new item</a>');
+		var $addNewItem = $('<a href="#" class="btn btn-info m-1">Add new item</a>');
 
 		$(document).ready(function () {
 			$collectionHolder = $('#item_list')
@@ -115,7 +115,7 @@
 		}
 
 		function addRemoveButton($panel) {
-			var $removeButton = $('<a href="#" class="btn btn-danger">Remove</a>')
+			var $removeButton = $('<a href="#" class="btn btn-danger m-1">Remove</a>')
 
 			var $panelFooter = $('<div class="panel-footer"></div>').append($removeButton)
 
